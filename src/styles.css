@@ -72,3 +72,11 @@ label {
 .active {
   color: black;
 }
+
+input.ng-touched {
+  border: 2px solid green;
+}
+
+input.ng-dirty.ng-invalid {
+  border: 2px solid red;
+}
