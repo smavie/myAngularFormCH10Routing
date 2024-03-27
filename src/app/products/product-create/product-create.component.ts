@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
@@ -23,9 +23,12 @@ export class ProductCreateComponent {
   }
 
   productForm = new FormGroup ({
-    name: new FormControl('', {nonNullable: true}),
-    price: new FormControl<number | undefined>(undefined,{nonNullable: true})
+    name: new FormControl('', {nonNullable: true, validators: Validators.required}),
+    price: new FormControl<number | undefined>(undefined,
+      {nonNullable: true, validators: [Validators.required, Validators.min(1)]
+      })
   });
+  
 
   get name() {return this.productForm.controls.name};
   get price() {return this.productForm.controls.price};
