@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
 
@@ -13,10 +15,19 @@ export class ProductCreateComponent {
 
   constructor(private productsService: ProductsService) {}
 
-  createProduct(name: string, price: number) {
-    this.productsService.addProduct(name, price).subscribe(product => {
+  createProduct() {
+    this.productsService.addProduct(this.name.value, Number(this.price.value)).subscribe(product => {
+      this.productForm.reset();
       this.added.emit(product);
     });
   }
+
+  productForm = new FormGroup ({
+    name: new FormControl('', {nonNullable: true}),
+    price: new FormControl<number | undefined>(undefined,{nonNullable: true})
+  });
+
+  get name() {return this.productForm.controls.name};
+  get price() {return this.productForm.controls.price};
 
 }
